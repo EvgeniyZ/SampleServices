@@ -19,7 +19,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int skip, [FromQuery] int take, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAll([FromQuery] int skip = 0, [FromQuery] int take = 100, CancellationToken cancellationToken = default)
         {
             var students = await studentRepository.GetAllPaged(skip, take, cancellationToken);
             return Ok(students);

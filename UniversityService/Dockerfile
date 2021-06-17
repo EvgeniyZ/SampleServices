@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["UniversityService/UniversityService.csproj", "UniversityService/"]
+COPY ["UniversityService.csproj", "UniversityService/"]
 RUN dotnet restore "UniversityService/UniversityService.csproj"
 COPY . .
 WORKDIR "/src/UniversityService"
