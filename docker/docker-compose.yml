@@ -1,0 +1,34 @@
+﻿version: '3.3'
+
+networks:
+  backend:
+
+services:
+
+  authentication:
+    ports:
+      - "5000:5000"
+    image: "authentication"
+    networks:
+      - backend
+    healthcheck:
+      test: curl -f -s 'http://127.0.0.1:5000/api/status' | grep -q '"appState":"OK"' || exit 1
+      interval: 15s
+      timeout: 15s
+      retries: 3
+    restart: unless-stopped
+
+  university:
+    ports:
+      - "5001:5000"
+    image: "university"
+    networks:
+      - backend
+    depends_on:
+      - "authentication"
+    healthcheck:
+      test: curl -f -s 'http://127.0.0.1:5000/api/status' | grep -q '"appState":"OK"' || exit 1
+      interval: 15s
+      timeout: 15s
+      retries: 3
+    restart: unless-stopped
